@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./pages/ProtectedRoute/ProtectedRoute";
+import UserTable from "./pages/Usermanagement/UserTable";
+import AddUserForm from "./pages/Usermanagement/AddUserForm";
+import Login from "./pages/LoginPage/Login";
+import NotFound from "./pages/NotFound/NotFound";
+import UpdateUserForm from "./pages/Usermanagement/UpdateUserForm";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+
+        <Route
+          path="/user-table"
+          element={
+            <ProtectedRoute>
+              <UserTable />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/add-user"
+          element={
+            <ProtectedRoute>
+              <AddUserForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/update-user/:id"
+          element={
+            <ProtectedRoute>
+              <UpdateUserForm />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
